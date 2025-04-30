@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Generate daily affirmations in English and Hindi to start your day with positivity. Click to get personalized affirmations now!">
+  <title>Daily Affirmation Generator - Get Positive Affirmations in English and Hindi</title>
+
+  <!-- Social Media Sharing Tags -->
+  <meta property="og:title" content="Daily Affirmation Generator">
+  <meta property="og:description" content="Get your daily dose of positivity with affirmations in English and Hindi. Start your day right!">
+  <meta property="og:image" content="path/to/image.jpg">
+  <meta property="og:url" content="https://yourwebsite.com/daily-affirmation-generator">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Daily Affirmation Generator">
+  <meta name="twitter:description" content="Generate daily affirmations to boost your positivity in English and Hindi.">
+  <meta name="twitter:image" content="path/to/image.jpg">
+
+ <style>/* Base Styles */
+  body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      transition: background-color 0.5s, color 0.5s;
+    }
+    
+    .container {
+      text-align: center;
+      padding: 20px;
+      border-radius: 15px;
+      max-width: 400px;
+    }
+    
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+    
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      background: linear-gradient(45deg, #ff6ec4, #7873f5);
+      color: white;
+      font-weight: bold;
+    }
+    
+    button:hover {
+      transform: scale(1.1);
+    }
+    
+    .affirmation-box {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 20px;
+      border-radius: 15px;
+      font-size: 1.2rem;
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Toggle Mode Switch */
+    .toggle-mode {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+    }
+    
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+    
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      border-radius: 24px;
+      transition: 0.4s;
+    }
+    
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      border-radius: 50%;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.4s;
+    }
+    
+    input:checked + .slider {
+      background-color: #4CAF50;
+    }
+    
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+    
+    /* Light and Dark Mode */
+    .light-mode {
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    
+    .dark-mode {
+      background-color: #121212;
+      color: #f5f5f5;
+    }
+    
+     </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Daily Affirmation Generator</h1>
+    
+    <div class="buttons">
+      <button id="englishBtn" aria-label="Show Affirmation in English">Show English</button>
+      <button id="hindiBtn" aria-label="Show Affirmation in Hindi">Show Hindi</button>
+    </div>
+
+    <div class="affirmation-box" id="affirmation">
+      Click a button to get your affirmation!
+    </div>
+
+    <div class="toggle-mode">
+      <label class="switch">
+        <input type="checkbox" id="modeToggle">
+        <span class="slider round"></span>
+      </label>
+      <span id="modeLabel">Light Mode</span>
+    </div>
+  </div>
+
+  <script>
+      
+      const englishAffirmations = [
+  "I am worthy of love and respect.",
+  "I choose to be happy today.",
+  "I am capable of achieving my goals.",
+  "I trust in my ability to make good decisions.",
+  "I radiate positive energy and attract good things.",
+  "I am enough just as I am.",
+  "I embrace challenges as opportunities to grow.",
+  "I am becoming the best version of myself.",
+  "I deserve all the good that comes to me.",
+  "I am proud of myself and my accomplishments.",
+  "My mind is full of brilliant ideas.",
+  "I am in charge of how I feel and I choose happiness.",
+  "I am free of worry and filled with peace.",
+  "I am bold, beautiful, and brilliant.",
+  "I am creating a life I love.",
+  "I am a magnet for miracles.",
+  "I am aligned with the energy of abundance.",
+  "I am at peace with all that has happened, is happening, and will happen.",
+  "I am confident in my ability to create the life I want.",
+  "I am constantly discovering new ways to improve myself.",
+  "I am empowered to create positive change.",
+  "I am fearless when faced with challenges.",
+  "I am filled with focus and motivation.",
+  "I am healing and becoming stronger every day.",
+  "I am in control of my thoughts and emotions.",
+  "I am kind to myself and others.",
+  "I am making a positive difference in the world.",
+  "I am open to receiving all the blessings life has to offer.",
+  "I am proud of how far I've come.",
+  "I am proud of myself and my journey.",
+  "I am letting go of what I can’t control.",
+  "I am focused, persistent, and will never quit.",
+  "I am always evolving into a better version of myself.",
+  "I am deeply connected to my inner wisdom.",
+  "I am resilient, strong, and brave.",
+  "I am letting love and light fill my soul.",
+  "I am grateful for the little things in life.",
+  "I am creating peace in my heart and around me.",
+  "I am walking my path with purpose and passion.",
+  "I am allowed to take up space and shine.",
+  "I am at home within myself.",
+  "I am committed to becoming the best version of me.",
+  "I am love. I am light. I am limitless."
+];
+
+const hindiAffirmations = [
+  "मैं सच में उस प्यार और सम्मान का हकदार हूँ, जो मैं हमेशा दूसरों को देता/देती आई हूँ।",
+  "आज मैं हर हाल में खुश रहने का फैसला करता/करती हूँ—क्योंकि ये मेरी अपनी चॉइस है।",
+  "मेरे अंदर वो सब कुछ है जो मेरे सपनों को हकीकत में बदल सकता है।",
+  "मुझे खुद पर और अपने फैसलों पर पूरा भरोसा है, चाहे रास्ता आसान हो या मुश्किल।",
+  "मैं जब भी मुस्कुराता/मुस्कुराती हूँ, तो अच्छी चीजें खुद-ब-खुद मेरी ओर खिंची चली आती हैं।",
+  "जैसा मैं हूँ, वैसा होना ही काफी है—मुझे खुद को किसी से कम नहीं आंकना।",
+  "हर चुनौती मेरे लिए एक मौका है कुछ नया सीखने और खुद को बेहतर बनाने का।",
+  "हर दिन मैं थोड़ा और बेहतर, थोड़ा और मजबूत इंसान बन रहा/रही हूँ।",
+  "जो भी अच्छा मेरी ज़िंदगी में आ रहा है, वो मेरा हक है—और मैं उसे दिल से स्वीकार करता/करती हूँ।",
+  "मैं आज अपने आप पर और उस सफर पर गर्व महसूस करता/करती हूँ जो मैंने अब तक तय किया है।",
+  "मेरे अंदर इतने शानदार आइडियाज़ हैं, जिन्हें बस थोड़ा यकीन और एक कदम चाहिए।",
+  "मेरा मूड मेरे हाथ में है—और आज मैं खुशी को गले लगाता/लगाती हूँ।",
+  "मैं चिंता को धीरे-धीरे छोड़ रहा/रही हूँ और शांति को अपनी सांसों में भर रहा/रही हूँ।",
+  "मैं निडर हूँ, खूबसूरत हूँ, और मेरे अंदर एक चमक है जो मुझे सबसे अलग बनाती है।",
+  "मैं हर दिन ऐसे फैसले ले रहा/रही हूँ जो मुझे उस ज़िंदगी के करीब ले जाते हैं, जिससे मैं सच्चा प्यार करता/करती हूँ।",
+  "मेरे इरादों में इतनी सच्चाई है कि ब्रह्मांड खुद मेरी मदद करने चला आता है।",
+  "मेरी सोच और मेरी मेहनत, दोनों मुझे भरपूर जीवन की ओर ले जा रही हैं।",
+  "जो हो चुका है, जो हो रहा है, और जो होगा—सबके साथ मैं शांति से हूँ।",
+  "मुझे अपने ऊपर पूरा भरोसा है—मैं अपने सपनों की ज़िंदगी खुद बना सकता/सकती हूँ।",
+  "हर दिन मैं खुद को थोड़ा और जान रहा/रही हूँ… और खुद से थोड़ा और प्यार कर रहा/रही हूँ।",
+  "मैं बदलाव ला सकता/सकती हूँ—अपने अंदर भी और इस दुनिया में भी।",
+  "जब सामने मुश्किल आती है, तब मेरे अंदर का साहस और भी जाग उठता है।",
+  "आज मेरा मन पूरी तरह केंद्रित है—और मेरा जुनून मुझे आगे बढ़ाता है।",
+  "हर दिन मेरा दिल, मेरा मन, और मेरी आत्मा थोड़ा और ठीक हो रही है… और मैं और मजबूत बन रहा/रही हूँ।",
+  "मेरे विचार और भावनाएं अब मेरे नियंत्रण में हैं—मैं उन्हें अपनी शक्ति बना रहा/रही हूँ।",
+  "मैं खुद के साथ दयालु हूँ… और दूसरों के लिए भी एक नरम दिल लेकर चलता/चलती हूँ।",
+  "मेरे छोटे-छोटे काम भी इस दुनिया में एक खूबसूरत बदलाव ला रहे हैं।",
+  "जीवन जो भी उपहार भेजे, मैं उसे खुले दिल से स्वीकार करता/करती हूँ।",
+  "जब मैं पीछे देखता/देखती हूँ, तो मुझे अपने सफर पर सच्चा गर्व महसूस होता है।",
+  "मेरी राह जैसी भी रही हो, हर मोड़ ने मुझे कुछ सिखाया है… और आज मैं खुद पर फख्र करता/करती हूँ।",
+  "जो मेरे बस में नहीं है, उसे अब मैं हल्के हाथों से जाने दे रहा/रही हूँ… और शांति पा रहा/रही हूँ।",
+  "जब मेरा दिल किसी मक़सद से जुड़ता है, तब हार मानना मेरे लिए कोई विकल्प नहीं होता।",
+  "मैं रोज़ थोड़ा और बेहतर बनता/बनती जा रही हूँ—भीतर से, सोच से, आत्मा से।",
+  "मेरे अंदर एक शांत आवाज़ है, जो हमेशा मुझे सही राह दिखाती है—अब मैं उसे सुन रहा/रही हूँ।",
+  "मैंने तूफ़ानों में भी खुद को संभाला है… मैं कमजोर नहीं, एक मिसाल हूँ।",
+  "मैं अपने अंदर की नफरतें, डर और शक छोड़ रहा/रही हूँ—अब सिर्फ रौशनी और प्यार को जगह दे रहा/रही हूँ।",
+  "एक कप चाय, किसी की मुस्कान, या ठंडी हवा—इन छोटी-छोटी चीजों में भी मैं कृतज्ञता महसूस करता/करती हूँ।",
+  "मैं ऐसा इंसान बन रहा/रही हूँ, जिसकी मौजूदगी से दिलों में सुकून उतर जाए।",
+  "मेरी राह अब सिर्फ मंज़िल की नहीं, बल्कि उस जुनून की भी है जो हर कदम को मायने देता है।",
+  "मुझे अपनी जगह लेने का, बोलने का, और चमकने का पूरा हक़ है—और अब मैं पीछे नहीं हटूँगा/हटूँगी।",
+  "अब मुझे बाहर की मंज़ूरी की ज़रूरत नहीं… मैंने खुद के अंदर एक घर बना लिया है।",
+  "मैं वादा करता/करती हूँ—अपने साथ कि मैं हर दिन खुद को और भी बेहतरीन बनाऊँगा/बनाऊँगी।",
+  "मैं सिर्फ एक नाम नहीं—मैं प्यार हूँ, मैं रौशनी हूँ, और मैं असीम हूँ।"
+];
+
+const englishBtn = document.getElementById('englishBtn');
+const hindiBtn = document.getElementById('hindiBtn');
+const affirmation = document.getElementById('affirmation');
+const modeToggle = document.getElementById('modeToggle');
+const modeLabel = document.getElementById('modeLabel');
+
+englishBtn.addEventListener('click', () => {
+  const randomIndex = Math.floor(Math.random() * englishAffirmations.length);
+  affirmation.textContent = englishAffirmations[randomIndex];
+});
+
+hindiBtn.addEventListener('click', () => {
+  const randomIndex = Math.floor(Math.random() * hindiAffirmations.length);
+  affirmation.textContent = hindiAffirmations[randomIndex];
+});
+
+modeToggle.addEventListener('change', () => {
+  document.body.classList.toggle('dark-mode');
+  document.body.classList.toggle('light-mode');
+  modeLabel.textContent = modeToggle.checked ? 'Dark Mode' : 'Light Mode';
+});
+
+// Default Light Mode
+document.body.classList.add('light-mode');
+
+      
+        </script>
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>Workout & Morning Routine Tracker | Fitness Daily Planner</title>
+
+  <meta name="description" content="Track your daily workout routines and morning habits easily. Stay consistent and achieve your fitness and productivity goals with this simple tracker.">
+  <meta name="keywords" content="Workout Tracker, Morning Routine Tracker, Fitness Planner, Daily Habit Tracker, Fitness Goals, Morning Tasks, Routine Management">
+  <meta name="author" content="Your Brand or Name">
+  
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Open Graph / Social Media Preview -->
+  <meta property="og:title" content="Workout & Morning Routine Tracker">
+  <meta property="og:description" content="Easily manage your daily fitness workouts and morning tasks. Boost your health and productivity.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="URL-to-your-preview-image.jpg"> 
+  <meta property="og:url" content="https://yourwebsite.com"> 
+  <!-- Favicon (Icon on browser tab) -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>  /* style.css */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: #000001;
+      font-family: 'Poppins', sans-serif;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    
+    .container {
+      background: rgb(234, 241, 159);
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    
+    .input-section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .input-section select, 
+    .input-section input, 
+    .input-section button {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    
+    .input-section button {
+      background: #b41988;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .input-section button:hover {
+      background: #3b5af4;
+    }
+    
+    .task-lists {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    
+    .task-section h2 {
+      margin-bottom: 10px;
+      color: #555;
+    }
+    
+    .task-section ul {
+      list-style-type: none;
+    }
+    
+    .task-section li {
+      background: #e0f2f1;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .task-section li.completed {
+      background: #c8e6c9;
+      text-decoration: line-through;
+    }
+    
+    .task-text {
+      font-size: 16px;
+    }
+    
+    .task-meta {
+      font-size: 12px;
+      color: #555;
+    }
+    
+    .task-section button {
+      background: #4c079b;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 8px;
+      cursor: pointer;
+      align-self: flex-end;
+    }
+    
+    .task-section button:hover {
+      background: #d50614;
+    }
+    
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+    
+    .reset-btn {
+      background: #1dc931;
+    }
+    
+    .history-btn {
+      background: #1b83d8;
+    }
+    
+    .history {
+      display: none;
+      margin-top: 20px;
+    }
+    
+    .history h3 {
+      margin-bottom: 10px;
+    }
+    
+    .history ul {
+      list-style-type: none;
+    }
+    
+    .history li {
+      background: #d1c4e9;
+      margin-bottom: 8px;
+      padding: 8px;
+      border-radius: 5px;
+      font-size: 15px;
+    }
+    
+    /* Mobile Responsive */
+    @media (max-width: 600px) {
+      .task-lists {
+        gap: 20px;
+      }
+    }
+     </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>🏋️‍♂️ Workout & 🌅 Morning Routine Tracker</h1>
+
+    <div class="input-section">
+      <select id="taskType" aria-label="Select Task Type">
+        <option value="workout">🏋️ Workout</option>
+        <option value="morning">🌅 Morning Task</option>
+      </select>
+
+      <input type="text" id="taskInput" placeholder="Enter Task" aria-label="Task Name">
+      <input type="date" id="dateInput" aria-label="Select Date">
+      <input type="time" id="timeInput" aria-label="Select Time">
+      <button onclick="addTask()">➕ Add Task</button>
+    </div>
+
+    <div class="task-lists">
+      <div class="task-section">
+        <h2>🏋️ Workout Tasks</h2>
+        <ul id="workoutList"></ul>
+        <div class="buttons">
+          <button onclick="resetTasks('workout')" class="reset-btn">🔄 Reset</button>
+          <button onclick="showHistory('workout')" class="history-btn">🕒 View History</button>
+        </div>
+        <div class="history" id="workoutHistory">
+          <h3>✅ Completed Workout Tasks</h3>
+          <ul></ul>
+        </div>
+      </div>
+
+      <div class="task-section">
+        <h2>🌅 Morning Tasks</h2>
+        <ul id="morningList"></ul>
+        <div class="buttons">
+          <button onclick="resetTasks('morning')" class="reset-btn">🔄 Reset</button>
+          <button onclick="showHistory('morning')" class="history-btn">🕒 View History</button>
+        </div>
+        <div class="history" id="morningHistory">
+          <h3>✅ Completed Morning Tasks</h3>
+          <ul></ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script> // script.js
+
+    function addTask() {
+      const taskType = document.getElementById('taskType').value;
+      const taskInput = document.getElementById('taskInput');
+      const dateInput = document.getElementById('dateInput');
+      const timeInput = document.getElementById('timeInput');
+    
+      const taskText = taskInput.value.trim();
+      const taskDate = dateInput.value;
+      const taskTime = timeInput.value;
+    
+      if (taskText === '' || taskDate === '' || taskTime === '') {
+        alert('Please fill all fields!');
+        return;
+      }
+    
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <div class="task-text" onclick="toggleComplete(this)">${taskText}</div>
+        <div class="task-meta">📅 ${taskDate} 🕒 ${taskTime}</div>
+        <button onclick="deleteTask(this)">❌ Delete</button>
+      `;
+    
+      if (taskType === 'workout') {
+        document.getElementById('workoutList').appendChild(li);
+      } else {
+        document.getElementById('morningList').appendChild(li);
+      }
+    
+      taskInput.value = '';
+      dateInput.value = '';
+      timeInput.value = '';
+    }
+    
+    function toggleComplete(taskDiv) {
+      const li = taskDiv.parentElement;
+      li.classList.toggle('completed');
+      
+      const text = li.querySelector('.task-text').innerText;
+      const meta = li.querySelector('.task-meta').innerText;
+      const historyList = li.parentElement.id === 'workoutList' ? 
+        document.querySelector('#workoutHistory ul') : 
+        document.querySelector('#morningHistory ul');
+        
+      if (li.classList.contains('completed')) {
+        const historyItem = document.createElement('li');
+        historyItem.innerText = `${text} (${meta})`;
+        historyList.appendChild(historyItem);
+      }
+    }
+    
+    function deleteTask(button) {
+      const li = button.parentElement;
+      li.remove();
+    }
+    
+    function resetTasks(type) {
+      if (type === 'workout') {
+        document.getElementById('workoutList').innerHTML = '';
+        document.querySelector('#workoutHistory ul').innerHTML = '';
+      } else {
+        document.getElementById('morningList').innerHTML = '';
+        document.querySelector('#morningHistory ul').innerHTML = '';
+      }
+    }
+    
+    function showHistory(type) {
+      const historyDiv = type === 'workout' ? document.getElementById('workoutHistory') : document.getElementById('morningHistory');
+      if (historyDiv.style.display === 'block') {
+        historyDiv.style.display = 'none';
+      } else {
+        historyDiv.style.display = 'block';
+      }
+    }
+     </script>
+</body>
+</html>

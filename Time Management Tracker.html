@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Boost your productivity with our beautiful and easy-to-use Time Tracker app. Track tasks, manage your time, and stay focused.">
+    <meta name="keywords" content="Time Tracker, Task Management, Productivity Timer, Work Timer, Pomodoro Timer, Task Tracker">
+    <meta name="author" content="Your Brand Name">
+    <meta property="og:title" content="Time Tracker - Manage Your Tasks and Boost Productivity">
+    <meta property="og:description" content="A smart and minimal Time Tracker to organize tasks and manage your time effectively.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourwebsite.com/time-tracker">
+    <meta property="og:image" content="https://yourwebsite.com/assets/thumbnail.png">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>Time Tracker | Boost Your Productivity with Task Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .add-btn {
+            background: #48bb78;
+            color: white;
+        }
+
+        .add-btn:hover {
+            background: #38a169;
+        }
+
+        .timer-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .timer-circle {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .timer-display {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .task-list {
+            list-style: none;
+        }
+
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            background: #f7fafc;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .task-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .task-time {
+            font-size: 0.8em;
+            color: #718096;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .start-btn { background: #4299e1; color: white; }
+        .pause-btn { background: #ed8936; color: white; }
+        .reset-btn { background: #f56565; color: white; }
+        .time-option { background: #a0aec0; color: white; }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .input-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .timer-circle {
+                width: 60%;
+                height: auto;
+            }
+
+            .task-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .controls {
+                gap: 5px;
+            }
+
+            .start-btn, .pause-btn, .reset-btn, .time-option {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .timer-circle {
+                width: 80%;
+                height: auto;
+            }
+
+            .timer-display {
+                font-size: 1.5em;
+            }
+
+            .task-item {
+                padding: 10px;
+                margin: 5px 0;
+            }
+
+            .task-info {
+                font-size: 14px;
+            }
+
+            .controls {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .start-btn, .pause-btn, .reset-btn, .time-option {
+                width: 100%;
+                padding: 15px;
+            }
+        }
+
+        .progress-circle {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+        }
+
+        .progress-circle circle {
+            fill: transparent;
+            stroke: #e2e8f0;
+            stroke-width: 8;
+        }
+
+        .progress-circle .progress {
+            stroke: #48bb78;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⏳ Time Tracker</h1>
+        
+        <div class="input-section">
+            <input type="text" placeholder="Enter task..." id="taskInput">
+            <button class="add-btn" onclick="addTask()">Add Task</button>
+        </div>
+
+        <div class="timer-section">
+            <div class="timer-circle">
+                <svg class="progress-circle" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
+                    <circle cx="100" cy="100" r="90"></circle>
+                    <circle class="progress" cx="100" cy="100" r="90"></circle>
+                </svg>
+                <div class="timer-display">25:00</div>
+            </div>
+            <div class="controls">
+                <button class="time-option" onclick="setTimer(1500)">25 Min</button>
+                <button class="time-option" onclick="setTimer(900)">15 Min</button>
+                <button class="time-option" onclick="setTimer(300)">5 Min</button>
+                <button class="start-btn" onclick="startTimer()">Start</button>
+                <button class="pause-btn" onclick="pauseTimer()">Pause</button>
+                <button class="reset-btn" onclick="resetTimer()">Reset</button>
+            </div>
+        </div>
+
+        <ul class="task-list" id="taskList"></ul>
+    </div>
+
+    <script>
+        const timerDisplay = document.querySelector('.timer-display');
+        const progress = document.querySelector('.progress');
+        const taskInput = document.getElementById('taskInput');
+        const taskList = document.getElementById('taskList');
+
+        let timeLeft = 1500; // 25 minutes in seconds
+        let timerId = null;
+        let totalTime = 1500;
+        const circumference = 2 * Math.PI * 90;
+
+        progress.style.strokeDasharray = circumference;
+        progress.style.strokeDashoffset = circumference;
+
+        function getCurrentDateTime() {
+            const now = new Date();
+            return `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+        }
+
+        function updateDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            const progressOffset = circumference - (timeLeft / totalTime) * circumference;
+            progress.style.strokeDashoffset = progressOffset;
+        }
+
+        function setTimer(seconds) {
+            timeLeft = seconds;
+            totalTime = seconds;
+            resetTimer();
+        }
+
+        function startTimer() {
+            if (!timerId && timeLeft > 0) {
+                timerId = setInterval(() => {
+                    timeLeft--;
+                    updateDisplay();
+                    if (timeLeft === 0) {
+                        clearInterval(timerId);
+                        alert('Time is up!');
+                    }
+                }, 1000);
+            }
+        }
+
+        function pauseTimer() {
+            clearInterval(timerId);
+            timerId = null;
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            timeLeft = totalTime;
+            updateDisplay();
+        }
+
+        function deleteTask(btn) {
+            const li = btn.closest('.task-item');
+            li.remove();
+        }
+
+        function addTask() {
+            const taskText = taskInput.value.trim();
+            if (taskText) {
+                const li = document.createElement('li');
+                li.className = 'task-item';
+                li.innerHTML = ` 
+                    <div class="task-info">
+                        <span>${taskText}</span>
+                        <span class="task-time">${getCurrentDateTime()}</span>
+                    </div>
+                    <div>
+                        <button class="start-btn" style="padding: 5px 10px;">▶</button>
+                        <button class="reset-btn" style="padding: 5px 10px;" onclick="deleteTask(this)">✖</button>
+                    </div>
+                `;
+                taskList.appendChild(li);
+                taskInput.value = '';
+            }
+        }
+
+        updateDisplay();
+    </script>
+</body>
+</html>

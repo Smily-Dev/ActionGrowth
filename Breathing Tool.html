@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="4-7-8 Breathing Tool - Relax and reduce stress with the 4-7-8 breathing technique."/>
+  <title>4-7-8 Breathing Tool - Relax and Reduce Stress</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(45deg, #140000, #070000);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+
+    header {
+      padding: 1rem;
+      background-color: rgba(34, 2, 2, 0.7);
+      width: 100%;
+    }
+
+    h1 {
+      color: #ffffff;
+      margin-bottom: 1rem;
+      font-size: 2.5rem;
+    }
+
+    .circle {
+      width: 40vw;
+      max-width: 250px;
+      height: 40vw;
+      max-height: 250px;
+      background: #41fb95;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: white;
+      transition: transform 4s ease-in-out;
+      margin-bottom: 1rem;
+    }
+
+    .circle.inhale {
+      animation: inhale 4s ease-in-out forwards;
+    }
+
+    .circle.hold {
+      animation: hold 7s linear forwards;
+    }
+
+    .circle.exhale {
+      animation: exhale 8s ease-in-out forwards;
+    }
+
+    @keyframes inhale {
+      from { transform: scale(1); }
+      to { transform: scale(1.4); }
+    }
+
+    @keyframes hold {
+      from { transform: scale(1.4); }
+      to { transform: scale(1.4); }
+    }
+
+    @keyframes exhale {
+      from { transform: scale(1.4); }
+      to { transform: scale(1); }
+    }
+
+    #instruction {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      color: #ffffff;
+    }
+
+    .buttons {
+      margin-top: 2rem;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    button {
+      padding: 0.6rem 1.4rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 20px;
+      background-color: #3c0aa1;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #e51fa3;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .circle {
+        width: 60vw;
+        height: 60vw;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      #instruction {
+        font-size: 1rem;
+      }
+
+      button {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🧘‍♀️ 4-7-8 Breathing Tool</h1>
+  </header>
+
+  <main>
+    <div class="circle" id="circle">Start</div>
+    <div id="instruction">Click "Start" to begin</div>
+
+    <div class="buttons">
+      <button onclick="startBreathing()">Start</button>
+      <button onclick="stopBreathing()">Stop</button>
+    </div>
+  </main>
+
+  <script>
+    const circle = document.getElementById('circle');
+    const instruction = document.getElementById('instruction');
+    let breathingInterval;
+
+    function runCycle() {
+      instruction.textContent = "Inhale... (4s)";
+      circle.className = 'circle inhale';
+      circle.textContent = "Inhale";
+
+      setTimeout(() => {
+        instruction.textContent = "Hold... (7s)";
+        circle.className = 'circle hold';
+        circle.textContent = "Hold";
+      }, 4000);
+
+      setTimeout(() => {
+        instruction.textContent = "Exhale... (8s)";
+        circle.className = 'circle exhale';
+        circle.textContent = "Exhale";
+      }, 11000);
+    }
+
+    function startBreathing() {
+      runCycle();
+      breathingInterval = setInterval(runCycle, 19000); // Repeat cycle every 19s
+    }
+
+    function stopBreathing() {
+      clearInterval(breathingInterval);
+      instruction.textContent = "Click 'Start' to begin";
+      circle.className = 'circle';
+      circle.textContent = "Start";
+    }
+  </script>
+
+</body>
+</html>

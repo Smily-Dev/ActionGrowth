@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About ActionGrowth - Empowering Personal Growth</title>
+    
+    <meta name="description" content="ActionGrowth empowers dreamers and doers with tools and inspiration to transform ambitions into achievements.">
+    <meta name="keywords" content="Self Improvement, Growth Tools, Personal Development, Motivation, ActionGrowth">
+    <meta name="author" content="ActionGrowth Team">
+  
+    <meta property="og:title" content="About Us - ActionGrowth">
+    <meta property="og:description" content="Empowering you to design your best life with clarity, confidence, and action.">
+    <meta property="og:image" content="https://yourwebsite.com/your-og-image.jpg">
+    <meta property="og:url" content="https://yourwebsite.com/about.html">
+    <meta property="og:type" content="website">
+  
+    <link rel="icon" href="https://yourwebsite.com/favicon.ico" type="image/x-icon">
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #7F00FF;
+      --secondary-color: #E100FF;
+      --bg-light: #ffffff;
+      --bg-dark: #121212;
+      --text-light: #1f1f1f;
+      --text-dark: #f5f5f5;
+      --card-bg-light: #f9f9f9;
+      --card-bg-dark: #1e1e1e;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: var(--bg-light);
+      color: var(--text-light);
+      transition: all 0.4s ease;
+    }
+
+    nav {
+      width: 100%;
+      padding: 20px 40px;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: background 0.4s ease;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary-color);
+      font-style: bold;
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+
+    ul li a {
+      text-decoration: none;
+      color: var(--text-light);
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    ul li a:hover {
+      color: var(--primary-color);
+    }
+
+    .toggle-mode {
+      cursor: pointer;
+      background: var(--primary-color);
+      color: #fff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background 0.4s ease;
+    }
+
+    .toggle-mode:hover {
+      background: var(--secondary-color);
+    }
+
+    /* About Section */
+    #about {
+      padding: 80px 20px 40px;
+      max-width: 1000px;
+      margin: auto;
+      text-align: center;
+    }
+
+    #about h1 {
+      font-size: 42px;
+      margin-bottom: 20px;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    #about p {
+      font-size: 18px;
+      line-height: 1.8;
+      margin-bottom: 30px;
+      color: inherit;
+    }
+
+    .mission-vision {
+      margin-top: 50px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      background: var(--card-bg-light);
+      padding: 30px 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: #fff;
+    }
+
+    .card h3 {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    .card p {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* Dark Mode */
+    body.dark {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    body.dark nav {
+      background: rgba(18,18,18,0.9);
+    }
+
+    body.dark ul li a {
+      color: var(--text-dark);
+    }
+
+    body.dark ul li a:hover {
+      color: var(--secondary-color);
+    }
+
+    body.dark .toggle-mode {
+      background: var(--secondary-color);
+    }
+
+    body.dark .card {
+      background: var(--card-bg-dark);
+      box-shadow: 0 4px 10px rgba(255,255,255,0.05);
+    }
+
+    body.dark .card:hover {
+      background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+      color: #fff;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <div class="logo">ActionGrowth</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="toggle-mode" onclick="toggleMode()">🌙</button>
+  </nav>
+
+  <section id="about">
+    <h1>About ActionGrowth</h1>
+    <p>At ActionGrowth, we believe that small actions, taken consistently, lead to massive transformations.  
+    Our mission is to empower dreamers, creators, and doers with the right tools and inspiration to turn ambitions into achievements.</p>
+
+    <div class="mission-vision">
+      <div class="card">
+        <h3>🚀 Our Mission</h3>
+        <p>To unlock human potential by providing simple yet powerful tools that make growth easy, meaningful, and unstoppable.</p>
+      </div>
+      <div class="card">
+        <h3>🌟 Our Vision</h3>
+        <p>To build a world where every individual is empowered to design their best life — with clarity, confidence, and action.</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function toggleMode() {
+      document.body.classList.toggle('dark');
+      const modeBtn = document.querySelector('.toggle-mode');
+      if (document.body.classList.contains('dark')) {
+        modeBtn.textContent = "☀️";
+      } else {
+        modeBtn.textContent = "🌙";
+      }
+    }
+  </script>
+</body>
+</html>

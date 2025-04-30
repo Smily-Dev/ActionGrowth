@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Comfort Zone Challenge Generator: Generate and track personal growth challenges to step out of your comfort zone and grow. Available in Hindi and English.">
+        <meta name="keywords" content="comfort zone challenge, personal growth, self-improvement, challenges generator, motivational challenges">
+        <meta name="author" content="Your Name">
+        <title>Comfort Zone Challenge Generator</title>
+        <link rel="canonical" href="https://www.yourwebsite.com/comfort-zone-challenge">
+        <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f0f2f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .language-btns {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .lang-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .lang-btn:hover {
+            transform: scale(1.05);
+        }
+
+        #hindiBtn {
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            color: white;
+        }
+
+        #englishBtn {
+            background: linear-gradient(45deg, #4ECDC4, #45B7D1);
+            color: white;
+        }
+
+        .challenge-box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            text-align: center;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        #generateBtn {
+            background: linear-gradient(45deg, #6C5CE7, #A363D9);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        #clearBtn {
+            background: linear-gradient(45deg, #FF7675, #D63031);
+            color: white;
+        }
+
+        .history-section {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 10px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .remove-btn {
+            background: #d620b2;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .challenge-box {
+                padding: 20px;
+                font-size: 1em;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 id="title">Comfort Zone Challenge Generator</h1>
+        </div>
+
+        <div class="language-btns">
+            <button class="lang-btn" id="hindiBtn">हिंदी</button>
+            <button class="lang-btn" id="englishBtn">English</button>
+        </div>
+
+        <div class="challenge-box" id="challengeBox">
+            <span id="challengeText">Click the button to get a challenge!</span>
+        </div>
+
+        <div class="buttons">
+            <button id="generateBtn">Generate New Challenge</button>
+            <button id="clearBtn">Clear History</button>
+        </div>
+
+        <div class="history-section">
+            <h3 id="historyTitle">Challenge History:</h3>
+            <div id="history"></div>
+        </div>
+    </div>
+
+    <script>
+        const challenges = {
+            en: [
+            "Talk to a stranger for 5 minutes",
+            "Do 30 push-ups in one go",
+            "Wake up at 5 AM for a week",
+            "Take cold shower for 3 consecutive days",
+            "Learn 10 new words in a foreign language",
+            "Meditate for 20 minutes daily for a week",
+            "Write a letter to your future self",
+            "Donate something you cherish",
+            "Cook a new recipe from scratch",
+            "Do a digital detox for 24 hours",
+            "Compliment 5 strangers today",
+            "Run 1 km without stopping",
+            "Public speaking practice in a park",
+            "Learn basic sign language",
+            "Fast from social media for 48 hours",
+            "Volunteer for community service",
+            "Dance in a public place",
+            "Read an entire book in one day",
+            "Walk 10,000 steps daily for a week",
+            "Try a completely new hairstyle",
+            "Apologize to someone you wronged",
+            "Do 100 squats daily for 3 days",
+            "Learn to solve a Rubik's cube",
+            "Sing a song in front of others",
+            "Write poetry and share online",
+            "Practice gratitude journaling for 7 days",
+            "Learn basic CPR techniques",
+            "Try fasting for 24 hours",
+            "Take a different route to work/school",
+            "Learn fire-making without matches",
+            "Memorize a famous speech",
+            "Do plank for 5 minutes straight",
+            "Learn to juggle 3 balls",
+            "Write 500-word personal essay",
+            "Try extreme sport (bungee/rock climbing)",
+            "Learn basic coding skills",
+            "Perform random act of kindness",
+            "Face your biggest fear head-on",
+            "Learn magic trick and perform",
+            "Build something with bare hands",
+            "Start a side hustle project",
+            "Learn to play musical instrument",
+            "Do 30-day photo challenge",
+            "Master memory palace technique",
+            "Try improv comedy class",
+            "Learn professional photography",
+            "Practice stoicism for a week",
+            
+            "Learn calligraphy art",
+            "Start investment portfolio",
+            "Build emergency survival kit",
+            "Learn negotiation techniques",
+            "Master time management matrix",
+            "Practice minimalist lifestyle",
+            "Learn basic car maintenance",
+            "Do 100-hour skill challenge",
+            "Create vision board for goals",
+            "Learn public debate skills",
+            "Practice morning affirmations",
+            "Develop leadership qualities",
+            "Learn stress management",
+            "Master speed reading",
+            "Practice active listening",
+            "Learn conflict resolution",
+            "Develop growth mindset",
+            "Practice positive self-talk",
+            "Learn emotional intelligence",
+            "Master persuasive speaking",
+            "Develop critical thinking"
+            ],
+            hi: [
+               "अजनबी से 5 मिनट बात करें",
+            "एक बार में 10 पुश-अप करें",
+            "एक सप्ताह तक 5 बजे उठें",
+            "लगातार 3 दिन ठंडे पानी से नहाएँ",
+            "विदेशी भाषा के 10 नए शब्द सीखें",
+            "एक सप्ताह तक रोज 20 मिनट ध्यान करें",
+            "भविष्य के स्वयं को पत्र लिखें",
+            "प्रिय वस्तु दान करें",
+            "नई रेसिपी बनाएँ",
+            "14 घंटे डिजिटल डिटॉक्स करें",
+            "5 अजनबियों की तारीफ करें",
+            "बिना रुके 1 किमी दौड़ें",
+            "पार्क में सार्वजनिक भाषण अभ्यास करें",
+            "सांकेतिक भाषा सीखें",
+            "8 घंटे सोशल मीडिया से दूर रहें",
+            "सामुदायिक सेवा करें",
+            "सार्वजनिक स्थान पर नृत्य करें",
+            "एक दिन में पूरी किताब पढ़ें",
+            "एक सप्ताह तक रोज 10,000 कदम चलें",
+            "नया हेयरस्टाइल आजमाएँ",
+            "जिसे दुख पहुँचाया हो, उससे माफी माँगें",
+            "3 दिन तक रोज 100 स्क्वैट्स करें",
+            "रूबिक्स क्यूब सुलझाना सीखें",
+            "लोगों के सामने गाना गाएँ",
+            "कविता लिखकर ऑनलाइन शेयर करें",
+            "7 दिन तक कृतज्ञता जर्नलिंग करें",
+            "सीपीआर तकनीक सीखें",
+            "24 घंटे उपवास करें",
+            "काम/स्कूल के लिए नया रास्ता अपनाएँ",
+            "बिना माचिस के आग जलाना सीखें",
+            "प्रसिद्ध भाषण याद करें",
+            "5 मिनट तक प्लैंक करें",
+            "3 गेंदों से जगलिंग सीखें",
+            "500 शब्दों का निजी निबंध लिखें",
+            "एक्सट्रीम स्पोर्ट्स आजमाएँ",
+            "बेसिक कोडिंग सीखें",
+            "बिना कारण के मदद करें",
+            "सबसे बड़े डर का सामना करें",
+            "जादू का ट्रिक सीखकर दिखाएँ",
+            "हाथों से कुछ बनाएँ",
+            "साइड हसल प्रोजेक्ट शुरू करें",
+            "वाद्य यंत्र बजाना सीखें",
+            "30-दिवसीय फोटो चैलेंज करें",
+            "मेमोरी पैलेस तकनीक सीखें",
+            "इम्प्रोव कॉमेडी क्लास लें",
+            "पेशेवर फोटोग्राफी सीखें",
+            "एक सप्ताह स्टोइकिज़म का अभ्यास करें",
+            
+            "कैलिग्राफी कला सीखें",
+            "निवेश पोर्टफोलियो बनाएँ",
+            "आपातकालीन किट तैयार करें",
+            "वार्तालाप कौशल सीखें",
+            "समय प्रबंधन मैट्रिक्स सीखें",
+            "मिनिमलिस्ट लाइफस्टाइल अपनाएँ",
+            "कार मेंटेनेंस के बेसिक्स सीखें",
+            "100-घंटे का स्किल चैलेंज करें",
+            "लक्ष्यों के लिए विज़न बोर्ड बनाएँ",
+            "सार्वजनिक वाद-विवाद कौशल सीखें",
+            "सुबह की पुष्टिकरण प्रैक्टिस करें",
+            "नेतृत्व गुण विकसित करें",
+            "तनाव प्रबंधन सीखें",
+            "स्पीड रीडिंग में महारत हासिल करें",
+            "सक्रिय श्रवण का अभ्यास करें",
+            "विवाद समाधान सीखें",
+            "ग्रोथ माइंडसेट विकसित करें",
+            "सकारात्मक आत्म-चर्चा करें",
+            "भावनात्मक बुद्धिमत्ता सीखें",
+            "प्रेरक वक्तृत्व कला सीखें",
+            "आलोचनात्मक सोच विकसित करें" 
+            ]
+        };
+
+        let currentLang = 'hi';
+        let history = [];
+
+        const elements = {
+            title: document.getElementById('title'),
+            challengeText: document.getElementById('challengeText'),
+            generateBtn: document.getElementById('generateBtn'),
+            clearBtn: document.getElementById('clearBtn'),
+            historyTitle: document.getElementById('historyTitle'),
+            history: document.getElementById('history')
+        };
+
+        const translations = {
+            hi: {
+                title: "Comfort Zone Challenge Generator",
+                defaultText: "Click the button to get a challenge!",
+                generateBtn: "Generate New Challenge",
+                clearBtn: "Clear History",
+                historyTitle: "Challenge History:" 
+            },
+            en:{
+                title: "Comfort Zone Challenge Generator",
+                defaultText: "Click the button to get a challenge!",
+                generateBtn: "Generate New Challenge",
+                clearBtn: "Clear History",
+                historyTitle: "Challenge History:"
+            }
+        };
+
+        function updateLanguage(lang) {
+            currentLang = lang;
+            Object.keys(translations[lang]).forEach(key => {
+                elements[key].textContent = translations[lang][key];
+            });
+            updateHistoryDisplay();
+        }
+
+        function generateChallenge() {
+            const challengeList = challenges[currentLang];
+            const randomIndex = Math.floor(Math.random() * challengeList.length);
+            const challenge = challengeList[randomIndex];
+            
+            elements.challengeText.textContent = challenge;
+            history.push({text: challenge, lang: currentLang});
+            updateHistoryDisplay();
+        }
+
+        function updateHistoryDisplay() {
+            elements.history.innerHTML = history.map((item, index) => `
+                <div class="history-item">
+                    <span>${item.text}</span>
+                    <button class="remove-btn" onclick="removeChallenge(${index})">×</button>
+                </div>
+            `).join('');
+        }
+
+        function removeChallenge(index) {
+            history.splice(index, 1);
+            updateHistoryDisplay();
+        }
+
+        function clearHistory() {
+            history = [];
+            updateHistoryDisplay();
+            elements.challengeText.textContent = translations[currentLang].defaultText;
+        }
+
+        // Event Listeners
+        document.getElementById('hindiBtn').addEventListener('click', () => updateLanguage('hi'));
+        document.getElementById('englishBtn').addEventListener('click', () => updateLanguage('en'));
+        document.getElementById('generateBtn').addEventListener('click', generateChallenge);
+        document.getElementById('clearBtn').addEventListener('click', clearHistory);
+
+        // Initial setup
+        updateLanguage('hi');
+    </script>
+</body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Track your learning progress with this easy-to-use tool. Add courses, monitor progress, and keep a history of your achievements.">
+  <meta name="keywords" content="learning tracker, course tracker, skill tracking, education tool, progress tracker">
+  <meta name="author" content="Your Name or Organization">
+  <meta property="og:title" content="Learning Tracker - Track Your Educational Progress">
+  <meta property="og:description" content="A simple tool to track your learning journey and keep track of course progress and history.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.yoursite.com">
+  <meta property="og:image" content="path-to-image.jpg">
+  <title>Learning Tracker - Track Your Educational Progress</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Container for the whole page */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #007BFF;
+    }
+
+    /* Form Container */
+    .form-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .form-container input {
+      padding: 10px;
+      width: 100%;
+      max-width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-container button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .form-container button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Course List */
+    .courses-list {
+      background-color: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    .courses-list ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .courses-list li {
+      background-color: #fff;
+      margin-bottom: 10px;
+      padding: 15px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .courses-list li h4 {
+      margin: 0;
+      color: #007BFF;
+    }
+
+    .courses-list li p {
+      margin: 5px 0;
+    }
+
+    .courses-list li button {
+      background-color: #ff5c5c;
+      color: #fff;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .courses-list li button:hover {
+      background-color: #e02e2e;
+    }
+
+    /* History Section */
+    .history-section {
+      background-color: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .history-section ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .history-section li {
+      background-color: #fff;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+
+    .history-section li h4 {
+      margin: 0;
+      color: #ff5c5c;
+    }
+
+    /* Clear All Button */
+    .clear-all-btn {
+      padding: 10px 20px;
+      background-color: #e02e2e;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      width: 100%;
+      max-width: 200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .clear-all-btn:hover {
+      background-color: #d10000;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .form-container input, .form-container button {
+        width: 100%;
+      }
+
+      .form-container {
+        justify-content: center;
+      }
+
+      .courses-list ul {
+        padding-left: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .form-container {
+        flex-direction: column;
+      }
+
+      .form-container input, .form-container button {
+        width: 100%;
+        max-width: none;
+      }
+
+      .courses-list li {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Learning Tracker</h1>
+
+    <!-- Form to add new courses -->
+    <div class="form-container">
+      <input type="text" id="course-name" placeholder="Enter Course/Skill Name">
+      <input type="number" id="progress" min="0" max="100" placeholder="Progress (%)">
+      <input type="date" id="start-date">
+      <input type="date" id="end-date">
+      <button onclick="addCourse()">Add Course/Skill</button>
+    </div>
+
+    <!-- Courses List -->
+    <div class="courses-list">
+      <h3>Your Learning List</h3>
+      <ul id="course-list">
+        <!-- Dynamic courses will be added here -->
+      </ul>
+    </div>
+
+    <!-- History Section -->
+    <div class="history-section">
+      <h3>History</h3>
+      <ul id="history-list">
+        <!-- Deleted courses will be shown here -->
+      </ul>
+    </div>
+
+    <!-- Clear All Button -->
+    <button class="clear-all-btn" onclick="clearAllCourses()">Clear All Courses</button>
+  </div>
+
+  <script>
+    // Sample data to track courses
+    let courses = [];
+    let deletedCourses = [];
+
+    // Function to add new course/skill
+    function addCourse() {
+      const courseName = document.getElementById('course-name').value;
+      const progress = document.getElementById('progress').value;
+      const startDate = document.getElementById('start-date').value;
+      const endDate = document.getElementById('end-date').value;
+
+      if (!courseName || !progress) {
+        alert('Please fill all the fields');
+        return;
+      }
+
+      const course = {
+        name: courseName,
+        progress: progress,
+        startDate: startDate,
+        endDate: endDate
+      };
+
+      // Push to courses array
+      courses.push(course);
+
+      // Clear inputs after adding
+      document.getElementById('course-name').value = '';
+      document.getElementById('progress').value = '';
+      document.getElementById('start-date').value = '';
+      document.getElementById('end-date').value = '';
+
+      // Update the displayed list
+      displayCourses();
+    }
+
+    // Function to display courses
+    function displayCourses() {
+      const courseList = document.getElementById('course-list');
+      courseList.innerHTML = ''; // Clear the list
+
+      courses.forEach((course, index) => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+          <div>
+            <h4>${course.name}</h4>
+            <p>Progress: ${course.progress}%</p>
+            <p>Start Date: ${course.startDate || 'N/A'}</p>
+            <p>End Date: ${course.endDate || 'N/A'}</p>
+          </div>
+          <button onclick="deleteCourse(${index})">Delete</button>
+        `;
+        courseList.appendChild(listItem);
+      });
+    }
+
+    // Function to delete a course
+    function deleteCourse(index) {
+      const deletedCourse = courses.splice(index, 1)[0];
+      deletedCourses.push(deletedCourse); // Move to history
+
+      // Update both course list and history list
+      displayCourses();
+      displayHistory();
+    }
+
+    // Function to display history (deleted courses)
+    function displayHistory() {
+      const historyList = document.getElementById('history-list');
+      historyList.innerHTML = ''; // Clear the history list
+
+      deletedCourses.forEach((course, index) => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+          <h4>${course.name}</h4>
+          <p>Progress: ${course.progress}%</p>
+          <p>Start Date: ${course.startDate || 'N/A'}</p>
+          <p>End Date: ${course.endDate || 'N/A'}</p>
+        `;
+        historyList.appendChild(listItem);
+      });
+    }
+
+    // Function to clear all courses
+    function clearAllCourses() {
+      courses = [];
+      deletedCourses = [];
+      displayCourses();
+      displayHistory();
+    }
+  </script>
+
+</body>
+</html>

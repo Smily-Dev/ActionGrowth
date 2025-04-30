@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="A gratitude wall where you can share positive thoughts and reflect on things you're thankful for. Create your own gratitude entries and feel the joy of positivity.">
+  <meta name="keywords" content="gratitude wall, gratitude, positive thinking, thankful, positivity, self-improvement, mindfulness">
+  <meta name="author" content="Your Name or Brand Name">
+  <meta property="og:title" content="Gratitude Wall">
+  <meta property="og:description" content="A gratitude wall where you can share positive thoughts and reflect on things you're thankful for.">
+  <meta property="og:image" content="your-image-url.jpg">
+  <meta property="og:url" content="https://www.yourwebsite.com">
+  <meta name="twitter:title" content="Gratitude Wall">
+  <meta name="twitter:description" content="A gratitude wall where you can share positive thoughts and reflect on things you're thankful for.">
+  <meta name="twitter:image" content="your-image-url.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Gratitude Wall</title>
+  <link rel="canonical" href="https://www.yourwebsite.com/gratitude-wall">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fffaf0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      margin: 0;
+    }
+
+    h1 {
+      margin-bottom: 1rem;
+      color: #e67e22;
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    .inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 2rem;
+    }
+
+    .inputs input {
+      padding: 0.6rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    button {
+      margin-top: 1rem;
+      padding: 0.7rem;
+      border: none;
+      border-radius: 20px;
+      background: #e67e22;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .wall {
+      margin-top: 2rem;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .entry {
+      background: #fdf6ec;
+      border-left: 4px solid #e67e22;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .delete-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #d1296f;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      .inputs input, button {
+        font-size: 0.9rem;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🧡 Gratitude Wall</h1>
+    <p>Share the positive moments and reflect on what you're thankful for. Add your entries below!</p>
+  </header>
+
+  <section class="inputs">
+    <input type="text" id="grat1" placeholder="1st Good Thing" aria-label="First gratitude entry" />
+    <input type="text" id="grat2" placeholder="2nd Good Thing" aria-label="Second gratitude entry" />
+    <input type="text" id="grat3" placeholder="3rd Good Thing" aria-label="Third gratitude entry" />
+    <button onclick="addGratitude()">Add to Wall</button>
+  </section>
+
+  
+  <footer>
+    <p>Created with ❤️ by ActionGrowth.</p>
+  </footer>
+
+  <script>
+    function addGratitude() {
+      const g1 = document.getElementById('grat1').value.trim();
+      const g2 = document.getElementById('grat2').value.trim();
+      const g3 = document.getElementById('grat3').value.trim();
+
+      if (!g1 && !g2 && !g3) {
+        alert("कम से कम एक चीज़ तो लिखिए 🙂");
+        return;
+      }
+
+      const entry = document.createElement('div');
+      entry.className = 'entry';
+      entry.innerHTML = `
+        <strong>🙏 Gratitude Entry:</strong><br/>
+        ${g1 ? `1. ${g1}<br/>` : ''}
+        ${g2 ? `2. ${g2}<br/>` : ''}
+        ${g3 ? `3. ${g3}<br/>` : ''}
+        <button class="delete-btn" onclick="deleteEntry(this)">Delete</button>
+      `;
+
+      document.getElementById('wall').prepend(entry);
+
+      document.getElementById('grat1').value = '';
+      document.getElementById('grat2').value = '';
+      document.getElementById('grat3').value = '';
+    }
+
+    function deleteEntry(button) {
+      const entry = button.parentElement;
+      entry.remove();
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mind Dump Journal - A place to organize your thoughts, jot down ideas, and track your mental state.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Mind Dump Journal">
+  <meta property="og:description" content="A place to organize your thoughts, jot down ideas, and track your mental state.">
+  <meta property="og:image" content="your-image-url.jpg"> <!-- Add a relevant image URL -->
+  <meta property="og:url" content="https://yourwebsite.com/mind-dump-journal">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mind Dump Journal">
+  <meta name="twitter:description" content="A place to organize your thoughts, jot down ideas, and track your mental state.">
+  <meta name="twitter:image" content="your-image-url.jpg">
+  <title>Mind Dump Journal - Organize Your Thoughts</title>
+  <style>
+    :root {
+      --primary: #46199a;
+      --secondary: #ff79b0;
+      --bg: #ffffff;
+      --text: #2d3748;
+    }
+
+    [data-theme="dark"] {
+      --primary: #bd1c7f;
+      --secondary: #03dac6;
+      --bg: #1a1a1a;
+      --text: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      transition: 0.3s ease;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      color: var(--primary);
+      font-size: 2.5rem;
+      margin: 0;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 300px;
+      padding: 1.5rem;
+      font-size: 1.1rem;
+      border: 2px solid var(--primary);
+      border-radius: 15px;
+      background: transparent;
+      color: var(--text);
+      resize: vertical;
+    }
+
+    textarea:focus {
+      outline: none;
+      box-shadow: 0 0 15px var(--primary);
+    }
+
+    .stats {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: var(--primary);
+    }
+
+    button {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      background: var(--primary);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    button:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    .theme-toggle {
+      background: var(--secondary);
+    }
+
+    .buttons {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .history-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(5px);
+    }
+
+    .history-content {
+      background: var(--bg);
+      padding: 25px;
+      border-radius: 15px;
+      max-width: 90%;
+      width: 700px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+
+    .history-entry {
+      margin: 15px 0;
+      padding: 15px;
+      border-radius: 8px;
+      background: rgba(124,77,255,0.1);
+      position: relative;
+    }
+
+    .entry-date {
+      font-size: 0.85em;
+      color: var(--text);
+      margin-bottom: 8px;
+      opacity: 0.8;
+    }
+
+    .entry-text {
+      margin: 10px 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .entry-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 10px;
+    }
+
+    .delete-btn {
+      background: #dc3545;
+      padding: 5px 15px;
+      border-radius: 15px;
+    }
+
+    .close-btn {
+      cursor: pointer;
+      font-size: 2rem;
+      position: absolute;
+      right: 20px;
+      top: 10px;
+      color: var(--text);
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      textarea {
+        min-height: 200px;
+      }
+
+      .buttons {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🧠 Mind Dump Journal</h1>
+      <div class="toolbar">
+        <button class="theme-toggle" onclick="toggleTheme()">🌓 Theme</button>
+        <button onclick="showHistory()">📜 History</button>
+      </div>
+    </header>
+
+    <textarea 
+      id="journal" 
+      placeholder="Dump all your thoughts here..."
+      oninput="updateStats()"
+    ></textarea>
+
+    <div class="stats">
+      <span id="wordCount">0 words</span>
+      <span id="lastSaved">Not saved yet</span>
+    </div>
+
+    <div class="buttons">
+      <button onclick="saveEntry()">💾 Save</button>
+      <button onclick="clearEntry()">🗑️ Clear</button>
+    </div>
+
+    <div id="historyModal" class="history-modal">
+      <div class="history-content">
+        <div class="modal-header">
+          <h2>📚 Journal History</h2>
+          <span class="close-btn" onclick="closeHistory()">&times;</span>
+        </div>
+        <div id="historyEntries"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const textarea = document.getElementById('journal');
+    let timeoutId;
+
+    function toggleTheme() {
+      document.body.setAttribute('data-theme',
+        document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+      );
+    }
+
+    function saveEntry() {
+      const entry = {
+        text: textarea.value,
+        date: new Date().toLocaleString(),
+        wordCount: textarea.value.trim().split(/\s+/).filter(word => word).length
+      };
+
+      if (entry.text.trim().length > 0) {
+        const history = JSON.parse(localStorage.getItem('mindDumpHistory') || '[]');
+        history.push(entry);
+        localStorage.setItem('mindDumpHistory', JSON.stringify(history));
+        updateLastSaved();
+        showNotification('Entry saved successfully!');
+      }
+    }
+
+    function clearEntry() {
+      if (confirm('Are you sure you want to clear this entry?')) {
+        textarea.value = '';
+        updateStats();
+      }
+    }
+
+    function showHistory() {
+      const history = JSON.parse(localStorage.getItem('mindDumpHistory') || []);
+      const entriesDiv = document.getElementById('historyEntries');
+      
+      entriesDiv.innerHTML = history.reverse().map((entry, index) => `
+        <div class="history-entry">
+          <div class="entry-date">📅 ${entry.date}</div>
+          <div class="entry-text">${entry.text || 'Empty entry'}</div>
+          <div class="entry-actions">
+            <button class="delete-btn" onclick="deleteEntry(${history.length - 1 - index})">Delete</button>
+          </div>
+        </div>
+      `).join('') || '<div style="text-align:center; color:#666;">No entries found</div>';
+      
+      document.getElementById('historyModal').style.display = 'flex';
+    }
+
+    function deleteEntry(index) {
+      const history = JSON.parse(localStorage.getItem('mindDumpHistory') || []);
+      if (index >= 0 && index < history.length) {
+        history.splice(index, 1);
+        localStorage.setItem('mindDumpHistory', JSON.stringify(history));
+        showHistory();
+      }
+    }
+
+    function closeHistory() {
+      document.getElementById('historyModal').style.display = 'none';
+    }
+
+    function updateStats() {
+      const text = textarea.value;
+      document.getElementById('wordCount').textContent = 
+        `${text.trim().split(/\s+/).filter(word => word).length} words`;
+    }
+
+    function updateLastSaved() {
+      const now = new Date().toLocaleTimeString();
+      document.getElementById('lastSaved').textContent = `Last saved: ${now}`;
+    }
+
+    function showNotification(message) {
+      const notification = document.createElement('div');
+      notification.textContent = message;
+      notification.style.position = 'fixed';
+      notification.style.bottom = '20px';
+      notification.style.right = '20px';
+      notification.style.background = 'var(--primary)';
+      notification.style.color = 'white';
+      notification.style.padding = '1rem';
+      notification.style.borderRadius = '8px';
+      document.body.appendChild(notification);
+      setTimeout(() => notification.remove(), 3000);
+    }
+
+    window.addEventListener('load', () => {
+      const history = JSON.parse(localStorage.getItem('mindDumpHistory') || '[]');
+      if (history.length > 0) {
+        textarea.value = history[history.length - 1].text;
+        updateStats();
+      }
+    });
+
+    window.onclick = function(event) {
+      if (event.target.classList.contains('history-modal')) {
+        closeHistory();
+      }
+    }
+  </script>
+</body>
+</html>

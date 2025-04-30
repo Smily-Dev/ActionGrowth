@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A simple and efficient task manager to help you manage your tasks effectively. Add, remove, and organize your tasks in an intuitive way.">
+  <meta name="keywords" content="task manager, productivity, task list, organize tasks, task organizer">
+  <meta name="author" content="Your Name">
+  
+  <!-- Open Graph Meta Tags for better social media sharing -->
+  <meta property="og:title" content="Simple Task Manager">
+  <meta property="og:description" content="A simple and efficient task manager to help you manage your tasks effectively.">
+  <meta property="og:image" content="path_to_image.jpg"> <!-- If you have an image for preview -->
+  <meta property="og:url" content="your-website-url.com">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Simple Task Manager">
+  <meta name="twitter:description" content="A simple and efficient task manager to help you manage your tasks effectively.">
+  <meta name="twitter:image" content="path_to_image.jpg"> <!-- If you have an image for preview -->
+
+  <title>Simple Task Manager</title>
+
+  <!-- Favicon for your site -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+ 
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .language-toggle {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background-color: #d80b9b;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      margin: 5px;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      opacity: 0.8;
+    }
+
+    input, select {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .task-list ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .task-list li {
+      background-color: #e0f7fa;
+      margin: 5px 0;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .clear-history {
+      background-color: #f44336;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="language-toggle">
+      <button id="englishBtn" onclick="switchLanguage('english')">English</button>
+      <button id="hindiBtn" onclick="switchLanguage('hindi')">हिन्दी</button>
+    </div>
+
+    <h1 id="title">Task Manager</h1>
+    <div class="task-input">
+      <input type="text" id="taskInput" placeholder="Enter task..." />
+      <select id="taskTag">
+        <option value="urgent" id="urgent">Urgent</option>
+        <option value="important" id="important">Important</option>
+      </select>
+      <button onclick="addTask()">Add Task</button>
+    </div>
+
+    <div class="task-list">
+      <h2 id="taskListTitle">Task List</h2>
+      <ul id="taskList"></ul>
+    </div>
+
+    <button id="clearHistory" onclick="clearHistory()">Clear History</button>
+  </div>
+
+  <script>
+    let language = 'english';  // Default language
+
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+    function updateLocalStorage() {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+      renderTasks();
+    }
+
+    function addTask() {
+      const taskInput = document.getElementById('taskInput');
+      const taskTag = document.getElementById('taskTag').value;
+
+      if (taskInput.value.trim()) {
+        tasks.push({ text: taskInput.value.trim(), tag: taskTag });
+        updateLocalStorage();
+        taskInput.value = ''; // Clear input
+      }
+    }
+
+    function renderTasks() {
+      const taskList = document.getElementById('taskList');
+      taskList.innerHTML = '';
+
+      tasks.forEach((task, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `${task.text} <span class="tag">${task.tag}</span>
+                        <button onclick="removeTask(${index})">Remove</button>`;
+        taskList.appendChild(li);
+      });
+    }
+
+    function removeTask(index) {
+      tasks.splice(index, 1);
+      updateLocalStorage();
+    }
+
+    function clearHistory() {
+      tasks.length = 0;
+      updateLocalStorage();
+    }
+
+    function switchLanguage(newLang) {
+      language = newLang;
+      if (language === 'english') {
+        document.getElementById('title').textContent = 'Task Manager';
+        document.getElementById('taskListTitle').textContent = 'Task List';
+        document.getElementById('clearHistory').textContent = 'Clear History';
+      } else {
+        document.getElementById('title').textContent = 'कार्य प्रबंधक';
+        document.getElementById('taskListTitle').textContent = 'कार्य सूची';
+        document.getElementById('clearHistory').textContent = 'इतिहास साफ करें';
+      }
+      renderTasks();
+    }
+
+    renderTasks();
+  </script>
+</body>
+</html>

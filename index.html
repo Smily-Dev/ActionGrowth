@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>ActionGrowth - Empower Your Productivity Effortlessly</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Discover effective tools to simplify your tasks, boost creativity, and accelerate success with ActionGrowth. Empower your productivity effortlessly!">
+    <meta name="keywords" content="productivity tools, creativity booster, task management, success tools, ActionGrowth, best productivity resources">
+    <meta name="author" content="ActionGrowth">
+    
+    <!-- Open Graph Meta Tags (for better social media sharing) -->
+    <meta property="og:title" content="ActionGrowth - Empower Your Productivity Effortlessly">
+    <meta property="og:description" content="Explore ActionGrowth's tools to boost your productivity and creativity.">
+    <meta property="og:image" content="https://yourwebsite.com/og-image.jpg"> <!-- यहाँ अपनी website का image URL डालें -->
+    <meta property="og:url" content="https://yourwebsite.com">
+    <meta property="og:type" content="website">
+  
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ActionGrowth - Empower Your Productivity Effortlessly">
+    <meta name="twitter:description" content="Explore ActionGrowth's tools to boost your productivity and creativity.">
+    <meta name="twitter:image" content="https://yourwebsite.com/og-image.jpg">
+  
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+  
+    <!-- Fonts and Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css"> <!-- External CSS if you separate it -->
+  
+    <!-- Canonical Link -->
+    <link rel="canonical" href="https://yourwebsite.com">
+  
+  
+  <style>
+    :root {
+      --primary-color: #7F00FF;
+      --secondary-color: #E100FF;
+      --bg-light: #ffffff;
+      --bg-dark: #1f1f1f;
+      --text-light: #333;
+      --text-dark: #f0f0f0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: var(--bg-light);
+      color: var(--text-light);
+      transition: 0.3s;
+    }
+
+    /* Navbar */
+    nav {
+      width: 100%;
+      padding: 20px 20px;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    ul li a {
+      text-decoration: none;
+      color: var(--text-light);
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    ul li a:hover {
+      color: var(--primary-color);
+    }
+
+    .toggle-mode {
+      cursor: pointer;
+      background: var(--primary-color);
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: bold;
+      transition: 0.3s;
+      margin-left: 10px;
+    }
+
+    .toggle-mode:hover {
+      background: var(--secondary-color);
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 28px;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    /* Sections */
+    section {
+      padding: 100px 20px 60px;
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    #home {
+      background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+      color: #fff;
+    }
+
+    section h1 {
+      font-size: 40px;
+      margin-bottom: 20px;
+      font-weight: 700;
+      animation: fadeInDown 1s ease;
+    }
+
+    section p {
+      font-size: 18px;
+      max-width: 700px;
+      margin-bottom: 30px;
+      line-height: 1.5;
+      animation: fadeIn 1.5s ease;
+    }
+
+    .cta-button {
+      background: #fff;
+      color: var(--primary-color);
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.4s ease;
+      animation: fadeInUp 2s ease;
+    }
+
+    .cta-button:hover {
+      background: var(--primary-color);
+      color: #fff;
+      border: 2px solid #fff;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Dark Mode */
+    body.dark {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    body.dark nav {
+      background: rgba(31,31,31,0.8);
+    }
+
+    body.dark ul li a {
+      color: var(--text-dark);
+    }
+
+    body.dark ul li a:hover {
+      color: var(--secondary-color);
+    }
+
+    body.dark .toggle-mode {
+      background: var(--secondary-color);
+      color: #fff;
+    }
+
+    body.dark .toggle-mode:hover {
+      background: var(--primary-color);
+    }
+
+    body.dark #home {
+      background: linear-gradient(to right, #333, #555);
+      color: #fff;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      nav {
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      ul {
+        flex-direction: column;
+        width: 100%;
+        background: rgba(255,255,255,0.9);
+        display: none;
+        margin-top: 10px;
+      }
+
+      ul.show {
+        display: flex;
+      }
+
+      ul li {
+        text-align: center;
+        padding: 10px 0;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      body.dark ul {
+        background: rgba(31,31,31,0.9);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <div class="logo">ActionGrowth</div>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <ul id="menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="toggle-mode" onclick="toggleMode()">🌙</button>
+  </nav>
+
+  <section id="home">
+    <h1>Empower Your Productivity, Effortlessly.</h1>
+    <p>Discover Effective tools designed to simplify your tasks, boost your creativity, and accelerate your success — all in one place.</p>
+    <a href="tools.html" class="cta-button">Explore Tools 🚀</a>
+  </section>
+
+  <script>
+    function toggleMode() {
+      document.body.classList.toggle('dark');
+      const modeBtn = document.querySelector('.toggle-mode');
+      modeBtn.textContent = document.body.classList.contains('dark') ? "☀️" : "🌙";
+    }
+
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      menu.classList.toggle('show');
+    }
+  </script>
+</body>
+</html>

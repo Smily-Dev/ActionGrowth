@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Tracker - Sleep & Mood Tracker</title>
+
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="Track your sleep and mood with this easy-to-use health tracker. Log your sleep hours, mood, intensity, and more to improve your well-being.">
+    <meta name="keywords" content="health tracker, sleep tracker, mood tracker, well-being, sleep quality, mood log, mental health tracker, daily tracker, self-care">
+    <meta name="author" content="Your Name">
+
+    <!-- Open Graph Meta Tags (for Social Media Sharing) -->
+    <meta property="og:title" content="Health Tracker - Sleep & Mood Tracker">
+    <meta property="og:description" content="Track your sleep and mood with this easy-to-use health tracker. Log your sleep hours, mood, intensity, and more to improve your well-being.">
+    <meta property="og:image" content="URL_TO_YOUR_IMAGE">
+    <meta property="og:url" content="https://www.yourwebsite.com/health-tracker">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@yourusername">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #f0f4f8;
+            color: #2d3748;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .tracker-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #2b6cb0;
+            font-size: 1.8em;
+        }
+
+        .input-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        input, select, textarea, button {
+            padding: 12px;
+            border: 2px solid #cbd5e0;
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button.danger {
+            background: #e53e3e;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .mood-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+        }
+
+        .mood-option {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .chart-container {
+            height: 300px;
+            margin-top: 20px;
+        }
+
+        .history-section {
+            margin-top: 30px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .entry-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            background: #f7fafc;
+            border-radius: 8px;
+        }
+
+        .entry-info {
+            flex: 1;
+            margin-right: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .input-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sleep Tracker -->
+        <div class="tracker-section">
+            <div class="section-header">
+                <h2>😴 Sleep Tracker</h2>
+                <button onclick="resetData('sleep')" class="danger"> Sleep Data</button>
+            </div>
+            <div class="input-group">
+                <input type="date" id="sleepDate" required>
+                <input type="time" id="bedtime" placeholder="Bedtime" required>
+                <input type="time" id="waketime" placeholder="Wake Time" required>
+                <select id="sleepQuality" required>
+                    <option value="">Sleep Quality</option>
+                    <option value="5">😊 Excellent</option>
+                    <option value="4">🙂 Good</option>
+                    <option value="3">😐 Average</option>
+                    <option value="2">😞 Poor</option>
+                    <option value="1">😫 Terrible</option>
+                </select>
+                <button onclick="logSleep()">Log Sleep</button>
+            </div>
+            <div class="chart-container">
+                <canvas id="sleepChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Mood Tracker -->
+        <div class="tracker-section">
+            <div class="section-header">
+                <h2>😀 Mood Tracker</h2>
+                <button onclick="resetData('mood')" class="danger"> Mood Data</button>
+            </div>
+            <div class="mood-grid" id="moodGrid">
+                <div class="mood-option" data-mood="5" style="background: #68d391">😁 Awesome</div>
+                <div class="mood-option" data-mood="4" style="background: #f6e05e">😊 Good</div>
+                <div class="mood-option" data-mood="3" style="background: #f6ad55">😐 Neutral</div>
+                <div class="mood-option" data-mood="2" style="background: #fc8181">😞 Low</div>
+                <div class="mood-option" data-mood="1" style="background: #805ad5">😭 Depressed</div>
+            </div>
+            <div class="input-group" style="margin-top:20px">
+                <input type="number" id="moodIntensity" min="1" max="10" placeholder="Intensity (1-10)" required>
+                <textarea id="moodNotes" placeholder="Notes..."></textarea>
+                <button onclick="logMood()">Log Mood</button>
+            </div>
+            <div class="chart-container">
+                <canvas id="moodChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Combined History -->
+        <div class="tracker-section">
+            <div class="section-header">
+                <h2>📜 Full History</h2>
+                <button onclick="resetData('all')" class="danger">Reset All Data</button>
+            </div>
+            <div class="history-section" id="historySection"></div>
+        </div>
+    </div>
+
+    <script>
+        let sleepData = JSON.parse(localStorage.getItem('sleepData')) || [];
+        let moodData = JSON.parse(localStorage.getItem('moodData')) || [];
+        let selectedMood = null;
+
+        // Initialize Charts
+        const sleepChart = new Chart(document.getElementById('sleepChart'), {
+            type: 'line',
+            data: { labels: [], datasets: [{
+                label: 'Sleep Hours',
+                data: [],
+                borderColor: '#4299e1',
+                tension: 0.3
+            }]},
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        const moodChart = new Chart(document.getElementById('moodChart'), {
+            type: 'bar',
+            data: { labels: [], datasets: [{
+                label: 'Mood Level',
+                data: [],
+                backgroundColor: '#48bb78'
+            }]},
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // Event Listeners
+        document.querySelectorAll('.mood-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.mood-option').forEach(o => o.classList.remove('selected'));
+                option.classList.add('selected');
+                selectedMood = option.dataset.mood;
+            });
+        });
+
+        function logSleep() {
+            const sleepEntry = {
+                id: Date.now(),
+                date: document.getElementById('sleepDate').value,
+                bedtime: document.getElementById('bedtime').value,
+                waketime: document.getElementById('waketime').value,
+                quality: document.getElementById('sleepQuality').value,
+                duration: calculateSleepDuration()
+            };
+
+            sleepData.push(sleepEntry);
+            saveAndUpdate();
+        }
+
+        function logMood() {
+            const moodEntry = {
+                id: Date.now(),
+                timestamp: new Date().toISOString(),
+                mood: selectedMood,
+                intensity: document.getElementById('moodIntensity').value,
+                notes: document.getElementById('moodNotes').value
+            };
+
+            moodData.push(moodEntry);
+            saveAndUpdate();
+        }
+
+        function calculateSleepDuration() {
+            const [bedH, bedM] = document.getElementById('bedtime').value.split(':').map(Number);
+            const [wakeH, wakeM] = document.getElementById('waketime').value.split(':').map(Number);
+            
+            let hours = wakeH - bedH;
+            let minutes = wakeM - bedM;
+            
+            if (minutes < 0) {
+                hours--;
+                minutes += 60;
+            }
+            return hours + (minutes / 60);
+        }
+
+        function saveAndUpdate() {
+            localStorage.setItem('sleepData', JSON.stringify(sleepData));
+            localStorage.setItem('moodData', JSON.stringify(moodData));
+            updateCharts();
+            showHistory();
+            clearInputs();
+        }
+
+        function updateCharts() {
+            // Sleep Chart
+            sleepChart.data.labels = sleepData.map(e => e.date);
+            sleepChart.data.datasets[0].data = sleepData.map(e => e.duration);
+            sleepChart.update();
+
+            // Mood Chart
+            moodChart.data.labels = moodData.map(e => new Date(e.timestamp).toLocaleDateString());
+            moodChart.data.datasets[0].data = moodData.map(e => e.mood);
+            moodChart.update();
+        }
+
+        function showHistory() {
+            const allEntries = [...sleepData, ...moodData]
+                .sort((a,b) => (b.id || b.date) - (a.id || a.date));
+            
+            document.getElementById('historySection').innerHTML = allEntries.map(entry => `
+                <div class="entry-card">
+                    <div class="entry-info">
+                        ${'duration' in entry 
+                            ? `😴 ${entry.date}: ${entry.duration.toFixed(1)}h sleep (Quality: ${entry.quality}/5)`
+                            : `😀 ${new Date(entry.timestamp).toLocaleString()}: Mood ${entry.mood}/5`}
+                        ${'notes' in entry && entry.notes ? `<br><small>${entry.notes}</small>` : ''}
+                    </div>
+                    <button onclick="deleteEntry(${entry.id}, '${'duration' in entry ? 'sleep' : 'mood'}')" 
+                            class="danger">Delete</button>
+                </div>
+            `).join('');
+        }
+
+        function deleteEntry(id, type) {
+            if (type === 'sleep') {
+                sleepData = sleepData.filter(entry => entry.id !== id);
+            } else {
+                moodData = moodData.filter(entry => entry.id !== id);
+            }
+            saveAndUpdate();
+        }
+
+        function resetData(type) {
+            if (type === 'all' || confirm(`Are you sure you want to reset all ${type} data?`)) {
+                if (type === 'sleep') sleepData = [];
+                if (type === 'mood') moodData = [];
+                if (type === 'all') {
+                    sleepData = [];
+                    moodData = [];
+                }
+                saveAndUpdate();
+            }
+        }
+
+        function clearInputs() {
+            document.querySelectorAll('input, select, textarea').forEach(input => {
+                if (input.type !== 'button') input.value = '';
+            });
+            document.querySelectorAll('.mood-option').forEach(o => o.classList.remove('selected'));
+            selectedMood = null;
+        }
+
+        // Initial Load
+        updateCharts();
+        showHistory();
+    </script>
+</body>
+</html>
